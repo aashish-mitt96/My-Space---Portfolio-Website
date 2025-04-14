@@ -12,7 +12,7 @@ Welcome to **My Space**, my personal portfolio where I showcase my projects, ski
 
 ## Live Link
 
-You can view my live portfolio here: [My Space - Portfolio]([https://yourwebsite.com](https://my-space-portfolio-website.vercel.app/))
+You can view my live portfolio here:((https://my-space-portfolio-website.vercel.app/))
 
 ---
 
