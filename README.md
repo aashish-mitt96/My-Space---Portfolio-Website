@@ -1,4 +1,4 @@
-# My Space - My Portfolio
+# myspace.portfolio
 
 Welcome to **My Space**, my personal portfolio where I showcase my projects, skills, and experience.
 
