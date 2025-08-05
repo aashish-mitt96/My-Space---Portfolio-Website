@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaHome, FaUser, FaFolderOpen, FaEnvelope, FaCube } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 const Navbar = () => {
+  const [active, setActive] = useState("Home"); // default active
+
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
   }, []);
@@ -15,13 +17,16 @@ const Navbar = () => {
     { name: "Contact", icon: <FaEnvelope />, href: "#contact" },
   ];
 
-  const handleClick = (e, targetId) => {
+  const handleClick = (e, link) => {
     e.preventDefault();
-    const targetElement = document.querySelector(targetId);
-    window.scrollTo({
-      top: targetElement.offsetTop - 70, 
-      behavior: "smooth",
-    });
+    setActive(link.name); // set active state
+    const targetElement = document.querySelector(link.href);
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop - 70,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
@@ -33,8 +38,8 @@ const Navbar = () => {
         shadow-xl shadow-purple-500/10 text-white rounded-b-xl"
       >
         <div
-          className="flex items-center gap-4 text-xl md:text-3xl font-bold text-purple-300 hover:text-purple-400 transition duration-300"
-          onClick={(e) => handleClick(e, "#home")}
+          className="flex items-center gap-4 text-xl md:text-3xl font-bold text-purple-300 hover:text-purple-400 transition duration-300 cursor-pointer"
+          onClick={(e) => handleClick(e, navLinks[0])} // Home link
         >
           <FaCube className="text-lg md:text-3xl transition-transform duration-500 hover:rotate-[360deg]" />
           <span className="hidden md:inline">My Space</span>
@@ -47,12 +52,18 @@ const Navbar = () => {
               data-aos-delay={index * 100}
             >
               <div
-                onClick={(e) => handleClick(e, link.href)}
-                className="group relative flex items-center gap-1 md:gap-2 transition-all duration-300 text-white hover:text-pink-400 cursor-pointer"
+                onClick={(e) => handleClick(e, link)}
+                className={`group relative flex items-center gap-1 md:gap-2 transition-all duration-300 cursor-pointer ${
+                  active === link.name ? "text-pink-400" : "text-white hover:text-pink-400"
+                }`}
               >
                 {link.icon}
                 {link.name}
-                <span className="absolute left-0 -bottom-0.5 w-0 h-0.5 bg-pink-400 transition-all duration-300 group-hover:w-full"></span>
+                <span
+                  className={`absolute left-0 -bottom-0.5 h-0.5 bg-pink-400 transition-all duration-300 ${
+                    active === link.name ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                ></span>
               </div>
             </li>
           ))}
